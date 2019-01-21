@@ -96,20 +96,27 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="GanjinZero.github.io">
-<meta property="og:url" content="https://ganjinzero.github.io/index.html">
+  <meta name="description" content="摘要本文介绍了语言模型，并介绍如何用MeCab和Keras实现一个日文的神经网络语言模型。（为什么是日文呢？纯属作者兴趣） 基于神经网络的语言模型依据Wikepedia，语言模型的定义是“句子们的概率分布”。给定一个长度为m的句子，则可以有概率      P(w_1,...,w_m)由条件概率公式有      P(w_1,...w_m) = \prod_{i=1}^mP(w_i|w_1,...w_">
+<meta name="keywords" content="Python, Keras, 语言模型, 日语">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Keras构造日文的神经网络语言模型">
+<meta property="og:url" content="https://ganjinzero.github.io/2019/01/21/用Keras构造日文的神经网络语言模型/index.html">
 <meta property="og:site_name" content="GanjinZero.github.io">
+<meta property="og:description" content="摘要本文介绍了语言模型，并介绍如何用MeCab和Keras实现一个日文的神经网络语言模型。（为什么是日文呢？纯属作者兴趣） 基于神经网络的语言模型依据Wikepedia，语言模型的定义是“句子们的概率分布”。给定一个长度为m的句子，则可以有概率      P(w_1,...,w_m)由条件概率公式有      P(w_1,...w_m) = \prod_{i=1}^mP(w_i|w_1,...w_">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ganjinzero.github.io/images/neural_language_model.png">
+<meta property="og:updated_time" content="2019-01-21T07:04:25.196Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GanjinZero.github.io">
+<meta name="twitter:title" content="用Keras构造日文的神经网络语言模型">
+<meta name="twitter:description" content="摘要本文介绍了语言模型，并介绍如何用MeCab和Keras实现一个日文的神经网络语言模型。（为什么是日文呢？纯属作者兴趣） 基于神经网络的语言模型依据Wikepedia，语言模型的定义是“句子们的概率分布”。给定一个长度为m的句子，则可以有概率      P(w_1,...,w_m)由条件概率公式有      P(w_1,...w_m) = \prod_{i=1}^mP(w_i|w_1,...w_">
+<meta name="twitter:image" content="https://ganjinzero.github.io/images/neural_language_model.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://ganjinzero.github.io/">
+  <link rel="canonical" href="https://ganjinzero.github.io/2019/01/21/用Keras构造日文的神经网络语言模型/">
 
 
 
@@ -119,7 +126,7 @@
   };
 </script>
 
-  <title>GanjinZero.github.io</title>
+  <title>用Keras构造日文的神经网络语言模型 | GanjinZero.github.io</title>
   
 
 
@@ -167,8 +174,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
-  page-home">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -206,7 +212,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -268,9 +274,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -302,10 +308,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/21/用Keras构造日文的神经网络语言模型/" class="post-title-link" itemprop="url">用Keras构造日文的神经网络语言模型</a>
+          <h1 class="post-title" itemprop="name headline">用Keras构造日文的神经网络语言模型
+
               
             
           </h1>
@@ -351,6 +355,13 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
 
           
 
@@ -369,9 +380,7 @@
       
 
       
-        
-          
-            <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文介绍了语言模型，并介绍如何用MeCab和Keras实现一个日文的神经网络语言模型。（为什么是日文呢？纯属作者兴趣）</p>
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文介绍了语言模型，并介绍如何用MeCab和Keras实现一个日文的神经网络语言模型。（为什么是日文呢？纯属作者兴趣）</p>
 <h1 id="基于神经网络的语言模型"><a href="#基于神经网络的语言模型" class="headerlink" title="基于神经网络的语言模型"></a>基于神经网络的语言模型</h1><p>依据Wikepedia，语言模型的定义是“句子们的概率分布”。给定一个长度为m的句子，则可以有概率</p>
 <script type="math/tex; mode=display">
     P(w_1,...,w_m)</script><p>由条件概率公式有</p>
@@ -450,8 +459,6 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
 <p>总体来说，该语言模型可以生成出一些通顺的话语。以上都是从空句子开始生成的，也可以改变生成句子的开头。</p>
 <h1 id="项目地址及参考文献"><a href="#项目地址及参考文献" class="headerlink" title="项目地址及参考文献"></a>项目地址及参考文献</h1><p>完整的项目代码见<a href="https://github.com/GanjinZero/Deep-Learning-Playground/tree/master/code/Language%20Model" target="_blank" rel="noopener">GitHub</a><br><a href="https://en.wikipedia.org/wiki/Language_model" target="_blank" rel="noopener">Language_model</a><br><a href="http://taku910.github.io/mecab/" target="_blank" rel="noopener">MeCab</a><br><a href="https://github.com/facebookresearch/fastText/blob/master/docs/crawl-vectors.md" target="_blank" rel="noopener">fastText</a></p>
 
-          
-        
       
     </div>
 
@@ -467,335 +474,65 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
       
     
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me Matcha Latte</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="GanjinZero 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ganjinzero.github.io/2019/01/17/在PyPI上发布并更新自己的python-package/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GanjinZero">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GanjinZero.github.io">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/17/在PyPI上发布并更新自己的python-package/" class="post-title-link" itemprop="url">在PyPI上发布并更新自己的python package</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-17 10:24:12" itemprop="dateCreated datePublished" datetime="2019-01-17T10:24:12+08:00">2019-01-17</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-01-18 13:08:37" itemprop="dateModified" datetime="2019-01-18T13:08:37+08:00">2019-01-18</time>
-              
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Python-Keras-语言模型-日语/" rel="tag"># Python, Keras, 语言模型, 日语</a>
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="将package整理成如下形式"><a href="#将package整理成如下形式" class="headerlink" title="将package整理成如下形式"></a>将package整理成如下形式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/example_pkg</span><br><span class="line">  /example_pkg</span><br><span class="line">    __init__.py</span><br><span class="line">  setup.py</span><br><span class="line">  LICENSE</span><br><span class="line">  README.md</span><br></pre></td></tr></table></figure>
-<h1 id="编辑setup-py"><a href="#编辑setup-py" class="headerlink" title="编辑setup.py"></a>编辑setup.py</h1><p>注意每次更新要更新版本号。</p>
-<h1 id="生成distribution-archives"><a href="#生成distribution-archives" class="headerlink" title="生成distribution archives"></a>生成distribution archives</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py sdist bdist_wheel</span><br></pre></td></tr></table></figure>
-<h1 id="上传distribution-archives"><a href="#上传distribution-archives" class="headerlink" title="上传distribution archives"></a>上传distribution archives</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">twine upload dist/*</span><br></pre></td></tr></table></figure>
-<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://packaging.python.org/tutorials/packaging-projects/" target="_blank" rel="noopener">Packaging Python Projects</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ganjinzero.github.io/2019/01/15/利用pyserverchan推送程序输出/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GanjinZero">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GanjinZero.github.io">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/15/利用pyserverchan推送程序输出/" class="post-title-link" itemprop="url">利用pyserverchan推送程序输出</a>
-              
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
+              <a href="/2019/01/17/在PyPI上发布并更新自己的python-package/" rel="next" title="在PyPI上发布并更新自己的python package">
+                <i class="fa fa-chevron-left"></i> 在PyPI上发布并更新自己的python package
+              </a>
             
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-15 11:46:01 / 修改时间：12:17:20" itemprop="dateCreated datePublished" datetime="2019-01-15T11:46:01+08:00">2019-01-15</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>在深度学习的过程中，训练时间一般很长，如果可以将训练结果自动推送到微信上，可以省去不少的麻烦。Server酱是一个向微信发送自定义信息的服务，我将该服务打包成了pyserverchan，可以让python用户简单的调用。</p>
-<h1 id="注册Server酱"><a href="#注册Server酱" class="headerlink" title="注册Server酱"></a>注册Server酱</h1><p>进入<a href="http://sc.ftqq.com/3.version" target="_blank" rel="noopener">Server酱</a>官网，只需要两个步骤即可完成注册。</p>
-<ul>
-<li>在主页登陆GitHub账号，获得一个SCKEY</li>
-<li>点击微信推送，进行绑定</li>
-</ul>
-<p>至此，你已经获得了一个SCKEY。在python中这样设置你的user_URL<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user_URL = <span class="string">'https://sc.ftqq.com/'</span> + SCKEY + <span class="string">'.send'</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="使用pyserverchan"><a href="#使用pyserverchan" class="headerlink" title="使用pyserverchan"></a>使用pyserverchan</h1><p>安装pyserverchan<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyserverchan</span><br></pre></td></tr></table></figure></p>
-<p>在Python中发送文字，图片（png格式），Markdown格式文件。（至多64K）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyserverchan <span class="keyword">import</span> pyserver</span><br><span class="line">svc = pyserver.ServerChan(user_URL)</span><br><span class="line">svc.output_to_weixin(<span class="string">"ATestMessage."</span>)</span><br><span class="line">svc.output_to_weixin_picture(<span class="string">"http://sc.ftqq.com/static/image/bottom_logo.png"</span>)</span><br><span class="line">svc.output_to_weixin_markdown(<span class="string">"J:/pyserverchan/README.md"</span>)</span><br></pre></td></tr></table></figure></p>
-<h1 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h1><p>当训练神经网络时，想将训练完的准确率发送至微信，加入如下代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">train_result = <span class="string">'Accuracy on train:'</span> + str(round(acc_train, <span class="number">4</span>) * <span class="number">100</span>) + <span class="string">"%"</span> + os.linesep + os.linesep</span><br><span class="line">train_result += <span class="string">'Accuracy on test:'</span> + str(round(acc_test, <span class="number">4</span>) * <span class="number">100</span>) + <span class="string">"%"</span></span><br><span class="line">svc.output_to_weixin(<span class="string">'Train done.'</span>, train_result) <span class="comment"># 第一个参数是发送的文章标题，第二个参数是发送的文章内容</span></span><br></pre></td></tr></table></figure></p>
-<p>微信端即可收到如下结果<br><img src="/images/1.jpg" alt=""></p>
-<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><ul>
-<li><a href="https://github.com/GanjinZero/pyserverchan" target="_blank" rel="noopener">GitHub</a></li>
-<li><a href="https://pypi.org/project/pyserverchan/" target="_blank" rel="noopener">PyPi</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -805,14 +542,15 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -833,8 +571,17 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -921,6 +668,23 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于神经网络的语言模型"><span class="nav-number">2.</span> <span class="nav-text">基于神经网络的语言模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用MeCab实现日语分词"><span class="nav-number">3.</span> <span class="nav-text">用MeCab实现日语分词</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型构建"><span class="nav-number">4.</span> <span class="nav-text">模型构建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语料库"><span class="nav-number">4.1.</span> <span class="nav-text">语料库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词向量"><span class="nav-number">4.2.</span> <span class="nav-text">词向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成训练集"><span class="nav-number">4.3.</span> <span class="nav-text">生成训练集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建神经网络模型"><span class="nav-number">4.4.</span> <span class="nav-text">构建神经网络模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机生成句子"><span class="nav-number">4.5.</span> <span class="nav-text">随机生成句子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保存模型"><span class="nav-number">4.6.</span> <span class="nav-text">保存模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#效果展示"><span class="nav-number">5.</span> <span class="nav-text">效果展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目地址及参考文献"><span class="nav-number">6.</span> <span class="nav-text">项目地址及参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1073,6 +837,10 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
 
 
   
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
 
   
 
@@ -1084,6 +852,8 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
   
 
 
+  
+
 
   
 
@@ -1103,14 +873,6 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
   
 
   
-  
-    
-      
-    
-      
-    
-      
-    
   
 
   
