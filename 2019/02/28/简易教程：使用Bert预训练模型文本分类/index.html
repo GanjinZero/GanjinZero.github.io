@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Bert介绍Bert模型是Google在2018年10月发布的语言表示模型，Bert在NLP领域横扫了11项任务的最优结果，可以说是现今最近NLP中最重要的突破。Bert模型的全称是Bidirectional Encoder Representations from Transformers，是通过训练Masked Language Model和预测下一句任务得到的模型。关于Bert具体训练的细节">
+<meta name="keywords" content="Bert, 中文分类, 句子向量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="教程：使用Bert预训练模型文本分类">
+<meta property="og:url" content="https://ganjinzero.github.io/2019/02/28/简易教程：使用Bert预训练模型文本分类/index.html">
+<meta property="og:site_name" content="GanjinZero.github.io">
+<meta property="og:description" content="Bert介绍Bert模型是Google在2018年10月发布的语言表示模型，Bert在NLP领域横扫了11项任务的最优结果，可以说是现今最近NLP中最重要的突破。Bert模型的全称是Bidirectional Encoder Representations from Transformers，是通过训练Masked Language Model和预测下一句任务得到的模型。关于Bert具体训练的细节">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-28T03:40:38.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="教程：使用Bert预训练模型文本分类">
+<meta name="twitter:description" content="Bert介绍Bert模型是Google在2018年10月发布的语言表示模型，Bert在NLP领域横扫了11项任务的最优结果，可以说是现今最近NLP中最重要的突破。Bert模型的全称是Bidirectional Encoder Representations from Transformers，是通过训练Masked Language Model和预测下一句任务得到的模型。关于Bert具体训练的细节">
+
+
+
+
+
+
+  <link rel="canonical" href="https://ganjinzero.github.io/2019/02/28/简易教程：使用Bert预训练模型文本分类/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>教程：使用Bert预训练模型文本分类 | GanjinZero.github.io</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GanjinZero.github.io</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ganjinzero.github.io/2019/02/28/简易教程：使用Bert预训练模型文本分类/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GanjinZero">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GanjinZero.github.io">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">教程：使用Bert预训练模型文本分类
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-28 11:40:38" itemprop="dateCreated datePublished" datetime="2019-02-28T11:40:38+08:00">2019-02-28</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Bert介绍"><a href="#Bert介绍" class="headerlink" title="Bert介绍"></a>Bert介绍</h1><p>Bert模型是Google在2018年10月发布的语言表示模型，Bert在NLP领域横扫了11项任务的最优结果，可以说是现今最近NLP中最重要的突破。Bert模型的全称是Bidirectional Encoder Representations from Transformers，是通过训练Masked Language Model和预测下一句任务得到的模型。关于Bert具体训练的细节和更多的原理，有兴趣的读者可以去看在<a href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">arXiv</a>上的原文。本篇文章从实践入手，带领大家进行Bert的中文文本分类和作为句子向量进行使用的教程。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.下载bert</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/google-research/bert.git</span><br></pre></td></tr></table></figure>
+<p>2.下载bert预训练模型</p>
+<p>Google提供了多种预训练好的bert模型，有针对不同语言的和不同模型大小的。对于中文模型，我们使用<a href="https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip" target="_blank" rel="noopener">Bert-Base, Chinese</a>。为了下载该模型，可能需要使用梯子。如果需要下载其他的模型(英文以及其他语言)，可以在<a href="https://github.com/google-research/bert" target="_blank" rel="noopener">Bert</a>里的Pre-trained models找到下载链接。</p>
+<p>3.（可选项）安装bert-as-service，这是一个可以利用bert模型将句子映射到固定长度向量的服务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install bert-serving-server # server</span><br><span class="line">pip install bert-serving-client # client, independent of &apos;bert-serving-server&apos;</span><br></pre></td></tr></table></figure>
+<p>该服务要求tensorflow的最低版本为1.10。</p>
+<h1 id="准备数据"><a href="#准备数据" class="headerlink" title="准备数据"></a>准备数据</h1><h2 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h2><p>作为中文文本分类问题，需要先将数据集整理成可用的形式。不同的格式对应了不同的DataProcessor类。可以将数据保存成如下格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">game	APEX是个新出的吃鸡游戏。</span><br><span class="line">technology	Google将要推出tensorflow2.0。</span><br></pre></td></tr></table></figure>
+<p>一行代表一个文本，由标签加上一个tab加上正文组成。</p>
+<p>将文本分割为三个文件，train.tsv(训练集)，dev.tsv(验证集)，test.tsv(测试集)；然后放置在同一个data_dir文件夹下。</p>
+<h2 id="编写DataProcessor类"><a href="#编写DataProcessor类" class="headerlink" title="编写DataProcessor类"></a>编写DataProcessor类</h2><p>在<strong>run_classifier.py</strong>中的<strong>def main(_):</strong>函数中将processors的内容增加为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">processors = &#123;</span><br><span class="line">      <span class="string">"cola"</span>: ColaProcessor,</span><br><span class="line">      <span class="string">"mnli"</span>: MnliProcessor,</span><br><span class="line">      <span class="string">"mrpc"</span>: MrpcProcessor,</span><br><span class="line">      <span class="string">"xnli"</span>: XnliProcessor,</span><br><span class="line">      <span class="string">"mytask"</span>: MyTaskProcessor,</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>实现如下的<strong>MyTaskProcessor(DataProcessor)</strong>类，并将这一段代码放置在<strong>run_classifier.py</strong>和其他Processor并列的位置。</p>
+<p><strong>__init__(self)</strong>中的self.labels含有所有的分类label。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTaskProcessor</span><span class="params">(DataProcessor)</span>:</span></span><br><span class="line">    <span class="string">"""Processor for the News data set (GLUE version)."""</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.labels = [<span class="string">'game'</span>, <span class="string">'fashion'</span>, <span class="string">'houseliving'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_train_examples</span><span class="params">(self, data_dir)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._create_examples(</span><br><span class="line">            self._read_tsv(os.path.join(data_dir, <span class="string">"train.tsv"</span>)), <span class="string">"train"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_dev_examples</span><span class="params">(self, data_dir)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._create_examples(</span><br><span class="line">            self._read_tsv(os.path.join(data_dir, <span class="string">"dev.tsv"</span>)), <span class="string">"dev"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_test_examples</span><span class="params">(self, data_dir)</span>:</span></span><br><span class="line">    	<span class="keyword">return</span> self._create_examples(</span><br><span class="line">        	self._read_tsv(os.path.join(data_dir, <span class="string">"test.tsv"</span>)), <span class="string">"test"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_labels</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.labels</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_create_examples</span><span class="params">(self, lines, set_type)</span>:</span></span><br><span class="line">        <span class="string">"""Creates examples for the training and dev sets."""</span></span><br><span class="line">        examples = []</span><br><span class="line">        <span class="keyword">for</span> (i, line) <span class="keyword">in</span> enumerate(lines):</span><br><span class="line">            guid = <span class="string">"%s-%s"</span> % (set_type, i)</span><br><span class="line">            text_a = tokenization.convert_to_unicode(line[<span class="number">1</span>])</span><br><span class="line">            label = tokenization.convert_to_unicode(line[<span class="number">0</span>])</span><br><span class="line">            examples.append(</span><br><span class="line">                InputExample(guid=guid, text_a=text_a, text_b=<span class="keyword">None</span>, label=label))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> examples</span><br></pre></td></tr></table></figure>
+<p>如果数据格式并不是一个label，一个tab，一段文本；则需要更改<strong>_create_examples()</strong>的实现。</p>
+<h2 id="编写运行脚本"><a href="#编写运行脚本" class="headerlink" title="编写运行脚本"></a>编写运行脚本</h2><p>新建一个运行脚本文件名为<strong>run.sh</strong>，将文件内容编辑为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> DATA_DIR=/media/ganjinzero/Code/bert/data/</span><br><span class="line"><span class="built_in">export</span> BERT_BASE_DIR=/media/ganjinzero/Code/bert/chinese_L-12_H-768_A-12</span><br><span class="line"></span><br><span class="line">python run_classifier.py \</span><br><span class="line">  --task_name=mytask \</span><br><span class="line">  --do_train=<span class="literal">true</span> \</span><br><span class="line">  --do_eval=<span class="literal">true</span> \</span><br><span class="line">  --data_dir=<span class="variable">$DATA_DIR</span>/ \</span><br><span class="line">  --vocab_file=<span class="variable">$BERT_BASE_DIR</span>/vocab.txt \</span><br><span class="line">  --bert_config_file=<span class="variable">$BERT_BASE_DIR</span>/bert_config.json \</span><br><span class="line">  --init_checkpoint=<span class="variable">$BERT_BASE_DIR</span>/bert_model.ckpt \</span><br><span class="line">  --max_seq_length=128 \</span><br><span class="line">  --train_batch_size=32 \</span><br><span class="line">  --learning_rate=2e-5 \</span><br><span class="line">  --num_train_epochs=3.0 \</span><br><span class="line">  --output_dir=/mytask_output</span><br></pre></td></tr></table></figure>
+<p>其中DATA_DIR是你的要训练的文本的数据所在的文件夹，BERT_BASE_DIR是你的bert预训练模型存放的地址。task_name要求和你的DataProcessor类中的名称一致。下面的几个参数，do_train代表是否进行fine tune，do_eval代表是否进行evaluation，还有未出现的参数do_predict代表是否进行预测。max_seq_length代表了句子的最长长度，当显存不足时，可以适当降低max_seq_length。</p>
+<h1 id="进行预测"><a href="#进行预测" class="headerlink" title="进行预测"></a>进行预测</h1><p>运行脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./run.sh</span><br></pre></td></tr></table></figure>
+<p>可以得到类似如下样式的结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">***** Eval results *****</span><br><span class="line">  eval_accuracy = 0.845588</span><br><span class="line">  eval_loss = 0.505248</span><br><span class="line">  global_step = 343</span><br><span class="line">  loss = 0.505248</span><br></pre></td></tr></table></figure>
+<p>如果出现了这样的输出，就是运行成功了。在<strong>run.sh</strong>里指定的output_dir文件夹下可以看到模型的evaluation结果和fine-tune之后的模型文件。</p>
+<h1 id="以句子向量的形式使用Bert"><a href="#以句子向量的形式使用Bert" class="headerlink" title="以句子向量的形式使用Bert"></a>以句子向量的形式使用Bert</h1><p>如果想要将bert模型的编码和其他模型一起使用，将bert模型作为句子向量使用很有意义。我们可以使用bert-as-service来完成这个目标。</p>
+<p>安装完bert-as-service以后，就可以利用bert模型将句子映射到固定长度的向量上。在终端中用一下命令启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bert-serving-start -model_dir /media/ganjinzero/Code/bert/chinese_L-12_H-768_A-12 -num_worker=4</span><br></pre></td></tr></table></figure>
+<p>model_dir后面的参数是bert预训练模型所在的文件夹。num_worker的数量应该取决于你的CPU/GPU数量。</p>
+<p>这时就可以在Python中调用如下的命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bert_serving.client <span class="keyword">import</span> BertClient</span><br><span class="line">bc = BertClient()</span><br><span class="line">bc.encode([<span class="string">'一二三四五六七八'</span>, <span class="string">'今天您吃了吗？'</span>])</span><br></pre></td></tr></table></figure>
+<p>最好以列表的形式，而非单个字符串传给<strong>bc.encode()</strong>参数，这样程序运行的效率较高。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://github.com/google-research/bert" target="_blank" rel="noopener">Github:bert</a></p>
+<p><a href="https://arxiv.org/pdf/1810.04805.pdf" target="_blank" rel="noopener">arXiv:bert</a></p>
+<p><a href="https://github.com/hanxiao/bert-as-service" target="_blank" rel="noopener">Github:bert-as-service</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me Matcha Latte</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="GanjinZero 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Bert-中文分类-句子向量/" rel="tag"># Bert, 中文分类, 句子向量</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/21/用Keras构造日文的神经网络语言模型/" rel="next" title="用Keras构造日文的神经网络语言模型">
+                <i class="fa fa-chevron-left"></i> 用Keras构造日文的神经网络语言模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">GanjinZero</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/GanjinZero" title="GitHub &rarr; https://github.com/GanjinZero" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yuanz17@mails.tsinghua.edu.cn" title="E-Mail &rarr; mailto:yuanz17@mails.tsinghua.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Bert介绍"><span class="nav-number">1.</span> <span class="nav-text">Bert介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备数据"><span class="nav-number">3.</span> <span class="nav-text">准备数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据格式"><span class="nav-number">3.1.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写DataProcessor类"><span class="nav-number">3.2.</span> <span class="nav-text">编写DataProcessor类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写运行脚本"><span class="nav-number">3.3.</span> <span class="nav-text">编写运行脚本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进行预测"><span class="nav-number">4.</span> <span class="nav-text">进行预测</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以句子向量的形式使用Bert"><span class="nav-number">5.</span> <span class="nav-text">以句子向量的形式使用Bert</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GanjinZero</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
