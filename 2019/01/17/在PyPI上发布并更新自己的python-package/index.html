@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="GanjinZero.github.io">
 <meta property="og:description" content="将package整理成如下形式123456/example_pkg  /example_pkg    __init__.py  setup.py  LICENSE  README.md 编辑setup.py注意每次更新要更新版本号。 生成distribution archives1python setup.py sdist bdist_wheel 上传distribution archives1t">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-18T05:08:37.353Z">
+<meta property="og:updated_time" content="2019-03-11T06:52:17.250Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在PyPI上发布并更新自己的python package">
 <meta name="twitter:description" content="将package整理成如下形式123456/example_pkg  /example_pkg    __init__.py  setup.py  LICENSE  README.md 编辑setup.py注意每次更新要更新版本号。 生成distribution archives1python setup.py sdist bdist_wheel 上传distribution archives1t">
@@ -349,7 +349,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-18 13:08:37" itemprop="dateModified" datetime="2019-01-18T13:08:37+08:00">2019-01-18</time>
+                <time title="修改时间：2019-03-11 14:52:17" itemprop="dateModified" datetime="2019-03-11T14:52:17+08:00">2019-03-11</time>
               
             
           </span>
@@ -394,6 +394,8 @@
 <h1 id="编辑setup-py"><a href="#编辑setup-py" class="headerlink" title="编辑setup.py"></a>编辑setup.py</h1><p>注意每次更新要更新版本号。</p>
 <h1 id="生成distribution-archives"><a href="#生成distribution-archives" class="headerlink" title="生成distribution archives"></a>生成distribution archives</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py sdist bdist_wheel</span><br></pre></td></tr></table></figure>
 <h1 id="上传distribution-archives"><a href="#上传distribution-archives" class="headerlink" title="上传distribution archives"></a>上传distribution archives</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">twine upload dist/*</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m twine upload dist/*</span><br></pre></td></tr></table></figure>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://packaging.python.org/tutorials/packaging-projects/" target="_blank" rel="noopener">Packaging Python Projects</a></p>
 
       
