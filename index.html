@@ -347,7 +347,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-28 12:21:09" itemprop="dateModified" datetime="2019-03-28T12:21:09+08:00">2019-03-28</time>
+                <time title="修改时间：2019-03-28 12:26:47" itemprop="dateModified" datetime="2019-03-28T12:26:47+08:00">2019-03-28</time>
               
             
           </span>
@@ -409,8 +409,61 @@
 </li>
 <li><p>第七行填写宝牌和里宝牌，里宝牌可以不填。注意是宝牌，不是宝牌指示牌！</p>
 </li>
-<li>第八行起填写这局牌的行进过程。每一行以*开始，每一个行动和行动之间有一个空格。比如第一行的动作3D9s可以翻译为东家摸切9s，4d9m可以翻译为3家切掉9m。只需要记录自家的摸牌动作（在这里就是2G，因为其他家摸到的牌你是看不见的，就算输入了模型也会忽略其他家的摸牌数据）完整的动作对应表见下表：<br>| 字符 |  含义 | 用法示例 |<br>| :———-: | :————————: | :————————: |<br>|     G     | 自摸（不是自摸和）  | 1G1m |<br>|     d     |        切牌        |        1d2s        |<br>|     D     |        摸切        |        1D1m        |<br>|     N     |        碰        |        1N        |<br>|     C     |        吃        |        1C1s3s（1s3s是玩家1自己的牌）        |<br>|     K     |        杠        |        1K1s        |<br>|     R     |       立直       |       1R       |<br>|     A     |       胡牌       |       1A       |</li>
+<li>第八行起填写这局牌的行进过程。每一行以*开始，每一个行动和行动之间有一个空格。比如第一行的动作3D9s可以翻译为东家摸切9s，4d9m可以翻译为3家切掉9m。只需要记录自家的摸牌动作（在这里就是2G，因为其他家摸到的牌你是看不见的，就算输入了模型也会忽略其他家的摸牌数据）完整的动作对应表见下表：</li>
 </ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:center">含义</th>
+<th style="text-align:center">用法示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">G</td>
+<td style="text-align:center">自摸（不是自摸和）</td>
+<td style="text-align:center">1G1m</td>
+</tr>
+<tr>
+<td style="text-align:center">d</td>
+<td style="text-align:center">切牌</td>
+<td style="text-align:center">1d2s</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">摸切</td>
+<td style="text-align:center">1D1m</td>
+</tr>
+<tr>
+<td style="text-align:center">N</td>
+<td style="text-align:center">碰</td>
+<td style="text-align:center">1N</td>
+</tr>
+<tr>
+<td style="text-align:center">C</td>
+<td style="text-align:center">吃</td>
+<td style="text-align:center">1C1s3s（1s3s是玩家1自己的牌）</td>
+</tr>
+<tr>
+<td style="text-align:center">K</td>
+<td style="text-align:center">杠</td>
+<td style="text-align:center">1K1s</td>
+</tr>
+<tr>
+<td style="text-align:center">R</td>
+<td style="text-align:center">立直</td>
+<td style="text-align:center">1R</td>
+</tr>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">胡牌</td>
+<td style="text-align:center">1A</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><strong>data/test.txt</strong>中可以保存多个牌谱，请在牌谱和牌谱之间用空行分隔。</p>
 <p>P.S. 如果可以直接获取到文字格式的天凤或者雀魂牌谱，可以编写一个牌谱的自动encoder，就不需要上述这么麻烦了。</p>
 <h2 id="开始预测"><a href="#开始预测" class="headerlink" title="开始预测"></a>开始预测</h2><p>在<strong>src</strong>文件夹下，使用如下的命令进行预测</p>
@@ -419,7 +472,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Richi player tenpai: [&apos;3m&apos;, &apos;6m&apos;, &apos;9m&apos;]</span><br><span class="line">Player 1: </span><br><span class="line">&#123;&apos;3m&apos;: 0.33759603, &apos;6m&apos;: 0.33912653, &apos;9m&apos;: 0.32323775&#125;</span><br><span class="line">Richi player tenpai: [&apos;3m&apos;, &apos;6m&apos;, &apos;9m&apos;]</span><br><span class="line">Player 2: </span><br><span class="line">&#123;&apos;3m&apos;: 0.337948, &apos;6m&apos;: 0.33527905, &apos;9m&apos;: 0.31589714&#125;</span><br><span class="line">Richi player tenpai: [&apos;3m&apos;, &apos;6m&apos;, &apos;9m&apos;]</span><br><span class="line">Player 3: </span><br><span class="line">&#123;&apos;3m&apos;: 0.33415237, &apos;6m&apos;: 0.33977884, &apos;9m&apos;: 0.32597464&#125;</span><br><span class="line">Richi player tenpai: [&apos;6m&apos;]</span><br></pre></td></tr></table></figure>
 <h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>欢迎提供更多的牌谱和咖啡给作者！联系作者：</p>
 <p><a href="https://github.com/GanjinZero/" target="_blank" rel="noopener">Github</a> - <a href="https://github.com/GanjinZero/" target="_blank" rel="noopener">https://github.com/GanjinZero/</a></p>
-<p>Email - <a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x79;&#x75;&#97;&#x6e;&#x7a;&#x31;&#x37;&#64;&#109;&#x61;&#x69;&#108;&#x73;&#46;&#x74;&#115;&#105;&#110;&#103;&#x68;&#117;&#97;&#46;&#101;&#100;&#117;&#46;&#99;&#110;">&#x79;&#x75;&#97;&#x6e;&#x7a;&#x31;&#x37;&#64;&#109;&#x61;&#x69;&#108;&#x73;&#46;&#x74;&#115;&#105;&#110;&#103;&#x68;&#117;&#97;&#46;&#101;&#100;&#117;&#46;&#99;&#110;</a></p>
+<p>Email - <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#121;&#x75;&#x61;&#110;&#x7a;&#x31;&#x37;&#x40;&#x6d;&#x61;&#x69;&#x6c;&#115;&#x2e;&#x74;&#x73;&#105;&#110;&#x67;&#x68;&#x75;&#x61;&#x2e;&#101;&#x64;&#x75;&#46;&#x63;&#x6e;">&#121;&#x75;&#x61;&#110;&#x7a;&#x31;&#x37;&#x40;&#x6d;&#x61;&#x69;&#x6c;&#115;&#x2e;&#x74;&#x73;&#105;&#110;&#x67;&#x68;&#x75;&#x61;&#x2e;&#101;&#x64;&#x75;&#46;&#x63;&#x6e;</a></p>
 <p><img src="/images/jyama.png" alt="Jyama"></p>
 
           
