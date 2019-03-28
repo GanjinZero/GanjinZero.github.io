@@ -285,6 +285,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ganjinzero.github.io/2019/03/26/科学麻将：从不放炮开始/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GanjinZero">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GanjinZero.github.io">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/26/科学麻将：从不放炮开始/" class="post-title-link" itemprop="url">科学麻将：从不放炮开始</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-26 15:34:00" itemprop="dateCreated datePublished" datetime="2019-03-26T15:34:00+08:00">2019-03-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-28 12:21:09" itemprop="dateModified" datetime="2019-03-28T12:21:09+08:00">2019-03-28</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p><a href="https://github.com/GanjinZero/Tenpai_prediction" target="_blank" rel="noopener">https://github.com/GanjinZero/Tenpai_prediction</a></p>
+<h1 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h1><p>日本麻将是一种最强调防守的麻将，它比其他的麻将更注重不要点炮（也就是放铳）。雀魂最近比较流行，所以我又重新开始玩日麻（以前在MJ和天凤都打过一点）。我也比较菜，才打到雀士三。一个经常遇到的场景时，当有人立直（门清宣告听牌）的时候，当我选择弃胡时，我想知道应该打出什么样的牌才不会点炮。这就是在这个项目中研究的问题：当他家率先立直时，他家可能的听牌有哪些。这个问题可以看成是一个文本分类问题来考虑，将前面已经打过的牌当作文本，听牌考虑成文本最终的分类。当然这还是和文本分类问题不太一样的，因为对于某一个文本一般是固定一个分类（比如情感分类中的积极或者消极）；而对于麻将而言首先一次听牌可以听好几种牌（纯正九莲宝灯！）、其次同样的舍牌可能听的牌完全不同。</p>
+<p>在这里推荐一本书《科学するマジャン》，可以在苹果的图书商店下载到。这里有利用概率论计算的麻将打法和一些关于麻将的数值模拟结果。本项目也是在阅读该书中产生的想法。</p>
+<p><img src="/images/big_hand.gif" alt="听说你在做大牌"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ロン!断幺九!30符1番,1000点!</span><br></pre></td></tr></table></figure>
+<h1 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h1><h2 id="牌谱收集"><a href="#牌谱收集" class="headerlink" title="牌谱收集"></a>牌谱收集</h2><p>最初是在《科学する麻雀》中看到了该书作者とつげき東北的<a href="http://totutohoku.b23.coreserver.jp/hp/" target="_blank" rel="noopener">个人主页</a>，然后在这面找到他收集的一些在东风庄这个平台上的一些<a href="http://totutohoku.b23.coreserver.jp/hp/HAIHU.htm" target="_blank" rel="noopener">牌谱</a>。</p>
+<p><a href=""><img src="/images/kagakusuru.jpg" alt="kagakul"></a></p>
+<p>一共收集有万份左右的牌谱。</p>
+<p>一份牌谱的示例如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">東2局 0本場(リーチ0) YZKTR 3000 松戸の俊 -1500 菌太郎 -1000 シャモア -500 </span><br><span class="line">  30符 二飜ツモ リーチ 門前清模和 </span><br><span class="line">  [1西]3p8p9p3s4s8s8s南西北白白発</span><br><span class="line">  [2北]1m5m6m7m4p6p1s5s7s東白白中</span><br><span class="line">  [3東]3m5m2p3p4p6p8p9p1s5s7s8s8s</span><br><span class="line">  [4南]1m4m4m9m1p5p5p7p9p4s4s北中</span><br><span class="line">  [表ドラ]西 [裏ドラ]北</span><br><span class="line">  * 3G9s 3D9s 4G中 4d9m 1G8m 1d北 2G4m 2d1s 3G6p 3D6p 4G1p 4d1m</span><br><span class="line">  * 1G6s 1d南 2G2s 2d1m 3G6s 3D6s 4G2s 4D2s 1C3s4s 1d8m 2C6m7m 2d2s</span><br><span class="line">  * 3G3s 3G3s 4G7p 4d9p 4R 1G3s 1d9p</span><br></pre></td></tr></table></figure>
+<p>这里记录了对局信息，胡牌的番型和各家起手牌、宝牌、每家每一轮的摸牌、切牌和鸣牌。这些牌谱的具体信息会在下文的<strong>牌谱准备</strong>中详细介绍。4R代表南家立直，那么对于东、西、北家都需要预测南家可能的听牌。因为各家的起手牌不同，摸到的牌也不同，所以对于南家的听牌有不同的估计（在德扑中叫做阻隔牌）。三家由于有不同的起手信息，所以可以生成三份训练数据。例如对于北家而言，可以只留下北家可以知道的信息作为训练用的x，而将南家的真实听牌作为训练用的y。</p>
+<h2 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h2><p>只用这些牌谱数据看起来还有些不够，训练出的结果不是很理想。考虑可以这样生成一些假的牌谱。将中、发、白以某种顺序置换；将饼、万、索以某种顺序置换；将123456789变成987654321。这样的变换不能保证是完全合理的。一个原因是绿一色导致索和饼、万并不是完全等价的，但考虑到绿一色出现的概率如此的低就不管了。另一个原因是宝牌的问题，比如原来的宝牌指示牌是1m，宝牌是2m。如果进行了123456789变成987654321，宝牌就会变成8m；这时宝牌指示牌并不能变成9m，而变成了7m。这两个问题不能很好解决，但为了获得更多的牌谱，还是进行了这几种置换。中发白的置换共6种，饼万索的置换共6种，数字颠倒共2种（颠倒或者不颠倒），一共6*6*2=72种变换方式。对每一份牌谱，我们随机的选择k=7种变换作为增强的数据。（考虑到内存大小，k不要太大）</p>
+<h2 id="将牌谱编码"><a href="#将牌谱编码" class="headerlink" title="将牌谱编码"></a>将牌谱编码</h2><p>我们将每一次摸牌，鸣牌或者打牌都定义为一个action，然后将这个action嵌入到一个52维向量中。这个向量描述了这个动作是谁执行的（东西南北家），是进行了什么动作（摸牌、切牌、吃碰杠、立直），是和哪一张牌进行了交互，交互牌是否是自风、场风、宝牌这些信息。具体的编码方式可以看<strong>/src/haifu_parser.py</strong>中的<strong>action_to_vector(action, player, chanfon, jikaze, dora_list)</strong>函数。</p>
+<h1 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h1><p>模型使用了双层LSTM网络连接34维的Softmax层进行预测（麻将一共34张不同的牌）。损失函数为交叉熵。在两块1080Ti的显卡下训练70个epoch得到了预训练的模型，大约需要训练2个小时。具体的模型可以参照<strong>/src/neural_network.py</strong>中的结构。</p>
+<h1 id="进行预测"><a href="#进行预测" class="headerlink" title="进行预测"></a>进行预测</h1><h2 id="预备工作"><a href="#预备工作" class="headerlink" title="预备工作"></a>预备工作</h2><p>需要有可以编译Python3的环境。在终端中输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/GanjinZero/Tenpai_prediction.git</span><br></pre></td></tr></table></figure></p>
+<p>下载该项目。在终端中输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install -r requirements.txt</span><br></pre></td></tr></table></figure></p>
+<p>安装依赖。</p>
+<h2 id="牌谱准备"><a href="#牌谱准备" class="headerlink" title="牌谱准备"></a>牌谱准备</h2><p>预训练好的模型保存在<strong>model/tenpai.model</strong>。我们需要将牌谱设置为<strong>data/test.txt</strong>中的格式，并保存到<strong>data/test.txt</strong>中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">東2局 0本場(リーチ0)</span><br><span class="line">  123</span><br><span class="line">  [1西]</span><br><span class="line">  [2北]1m5m6m7m4p6p1s5s7s東白白中</span><br><span class="line">  [3東]</span><br><span class="line">  [4南]</span><br><span class="line">  [表ドラ]西 [裏ドラ]北</span><br><span class="line">  * 3D9s 4d9m 1d北 2G4m 2d1s 3D6p 4d1m</span><br><span class="line">  * 1d南 2G2s 2d1m 3D6s 4D2s 1C3s4s 1d8m 2C6m7m 2d2s</span><br><span class="line">  * 3D3s 4d9p 4R 1G3s 1d9p</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>第一行填写东x局（或者南x局），后面的本场、立直棒、点棒信息都不是必要的。</li>
+<li>第二行填写符数、翻数、番形，可以留空行，但不能把这行都删了。</li>
+<li><p>第三-六行填写四家起手牌，可以只填自家牌，其他留空。其中m代表万，p代表饼，s代表索；“東南西北中発白”请使用日语汉字。比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[1西]</span><br><span class="line">[2北]1m5m6m7m4p6p1s5s7s東白白中</span><br><span class="line">[3東]</span><br><span class="line">[4南]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第七行填写宝牌和里宝牌，里宝牌可以不填。注意是宝牌，不是宝牌指示牌！</p>
+</li>
+<li>第八行起填写这局牌的行进过程。每一行以*开始，每一个行动和行动之间有一个空格。比如第一行的动作3D9s可以翻译为东家摸切9s，4d9m可以翻译为3家切掉9m。只需要记录自家的摸牌动作（在这里就是2G，因为其他家摸到的牌你是看不见的，就算输入了模型也会忽略其他家的摸牌数据）完整的动作对应表见下表：<br>| 字符 |  含义 | 用法示例 |<br>| :———-: | :————————: | :————————: |<br>|     G     | 自摸（不是自摸和）  | 1G1m |<br>|     d     |        切牌        |        1d2s        |<br>|     D     |        摸切        |        1D1m        |<br>|     N     |        碰        |        1N        |<br>|     C     |        吃        |        1C1s3s（1s3s是玩家1自己的牌）        |<br>|     K     |        杠        |        1K1s        |<br>|     R     |       立直       |       1R       |<br>|     A     |       胡牌       |       1A       |</li>
+</ul>
+<p><strong>data/test.txt</strong>中可以保存多个牌谱，请在牌谱和牌谱之间用空行分隔。</p>
+<p>P.S. 如果可以直接获取到文字格式的天凤或者雀魂牌谱，可以编写一个牌谱的自动encoder，就不需要上述这么麻烦了。</p>
+<h2 id="开始预测"><a href="#开始预测" class="headerlink" title="开始预测"></a>开始预测</h2><p>在<strong>src</strong>文件夹下，使用如下的命令进行预测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python predict.py</span><br></pre></td></tr></table></figure>
+<p>就可以看到类似如下的预测结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Richi player tenpai: [&apos;3m&apos;, &apos;6m&apos;, &apos;9m&apos;]</span><br><span class="line">Player 1: </span><br><span class="line">&#123;&apos;3m&apos;: 0.33759603, &apos;6m&apos;: 0.33912653, &apos;9m&apos;: 0.32323775&#125;</span><br><span class="line">Richi player tenpai: [&apos;3m&apos;, &apos;6m&apos;, &apos;9m&apos;]</span><br><span class="line">Player 2: </span><br><span class="line">&#123;&apos;3m&apos;: 0.337948, &apos;6m&apos;: 0.33527905, &apos;9m&apos;: 0.31589714&#125;</span><br><span class="line">Richi player tenpai: [&apos;3m&apos;, &apos;6m&apos;, &apos;9m&apos;]</span><br><span class="line">Player 3: </span><br><span class="line">&#123;&apos;3m&apos;: 0.33415237, &apos;6m&apos;: 0.33977884, &apos;9m&apos;: 0.32597464&#125;</span><br><span class="line">Richi player tenpai: [&apos;6m&apos;]</span><br></pre></td></tr></table></figure>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>欢迎提供更多的牌谱和咖啡给作者！联系作者：</p>
+<p><a href="https://github.com/GanjinZero/" target="_blank" rel="noopener">Github</a> - <a href="https://github.com/GanjinZero/" target="_blank" rel="noopener">https://github.com/GanjinZero/</a></p>
+<p>Email - <a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x79;&#x75;&#97;&#x6e;&#x7a;&#x31;&#x37;&#64;&#109;&#x61;&#x69;&#108;&#x73;&#46;&#x74;&#115;&#105;&#110;&#103;&#x68;&#117;&#97;&#46;&#101;&#100;&#117;&#46;&#99;&#110;">&#x79;&#x75;&#97;&#x6e;&#x7a;&#x31;&#x37;&#64;&#109;&#x61;&#x69;&#108;&#x73;&#46;&#x74;&#115;&#105;&#110;&#103;&#x68;&#117;&#97;&#46;&#101;&#100;&#117;&#46;&#99;&#110;</a></p>
+<p><img src="/images/jyama.png" alt="Jyama"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ganjinzero.github.io/2019/02/28/简易教程：使用Bert预训练模型文本分类/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1025,7 +1217,7 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1048,7 +1240,9 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
@@ -1282,6 +1476,8 @@ P(w_1,...w_m)</script><p>的任务变成了估计</p>
 
   
   
+    
+      
     
       
     
